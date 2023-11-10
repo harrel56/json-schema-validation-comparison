@@ -24,15 +24,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-import org.creekservice.kafka.test.perf.serde.EveritSerde;
-import org.creekservice.kafka.test.perf.serde.JustifySerde;
-import org.creekservice.kafka.test.perf.serde.MedeiaSerde;
-import org.creekservice.kafka.test.perf.serde.NetworkNtSerde;
-import org.creekservice.kafka.test.perf.serde.SchemaFriendSerde;
-import org.creekservice.kafka.test.perf.serde.SerdeImpl;
-import org.creekservice.kafka.test.perf.serde.SkemaSerde;
-import org.creekservice.kafka.test.perf.serde.SnowSerde;
-import org.creekservice.kafka.test.perf.serde.VertxSerde;
+
+import org.creekservice.kafka.test.perf.serde.*;
 import org.creekservice.kafka.test.perf.testsuite.JsonSchemaTestSuite.Result;
 import org.creekservice.kafka.test.perf.testsuite.JsonSchemaTestSuite.TestPredicate;
 import org.creekservice.kafka.test.perf.testsuite.output.PerDraftSummary;
@@ -54,7 +47,8 @@ public final class JsonTestSuiteMain {
                     new SchemaFriendSerde(),
                     new SkemaSerde(),
                     new SnowSerde(),
-                    new VertxSerde());
+                    new VertxSerde(),
+                    new DevHarrelSerde());
 
     // Increase locally to allow for meaningful profiling:
     private static final int ITERATIONS = 1;

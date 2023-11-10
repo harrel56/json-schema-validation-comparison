@@ -20,18 +20,7 @@ import static java.util.concurrent.TimeUnit.MICROSECONDS;
 
 import org.creekservice.kafka.test.perf.model.ModelState;
 import org.creekservice.kafka.test.perf.model.TestModel;
-import org.creekservice.kafka.test.perf.serde.ConfluentSerde;
-import org.creekservice.kafka.test.perf.serde.EveritSerde;
-import org.creekservice.kafka.test.perf.serde.JacksonIntermediateSerde;
-import org.creekservice.kafka.test.perf.serde.JacksonSerde;
-import org.creekservice.kafka.test.perf.serde.JustifySerde;
-import org.creekservice.kafka.test.perf.serde.MedeiaSerde;
-import org.creekservice.kafka.test.perf.serde.NetworkNtSerde;
-import org.creekservice.kafka.test.perf.serde.SchemaFriendSerde;
-import org.creekservice.kafka.test.perf.serde.SerdeImpl;
-import org.creekservice.kafka.test.perf.serde.SkemaSerde;
-import org.creekservice.kafka.test.perf.serde.SnowSerde;
-import org.creekservice.kafka.test.perf.serde.VertxSerde;
+import org.creekservice.kafka.test.perf.serde.*;
 import org.creekservice.kafka.test.perf.util.Logging;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
@@ -71,7 +60,7 @@ import org.openjdk.jmh.annotations.Threads;
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(MICROSECONDS)
 @Threads(4)
-@Fork(4) // Note: to debug, set fork to 0.
+@Fork(0) // Note: to debug, set fork to 0.
 // @Warmup(iterations = 0, time = 10)
 // @Measurement(iterations = 1, time = 10)
 @SuppressWarnings("FieldMayBeFinal") // not final to avoid folding.
@@ -81,62 +70,67 @@ public class JsonSerdeBenchmark {
         Logging.disable();
     }
 
-    @Benchmark
-    public TestModel measureJacksonRoundTrip(final JacksonSerde serde, final ModelState model) {
-        return roundTrip(serde, model);
-    }
-
-    @Benchmark
-    public TestModel measureJacksonIntermediateRoundTrip(
-            final JacksonIntermediateSerde serde, final ModelState model) {
-        return roundTrip(serde, model);
-    }
-
-    @Benchmark
-    public TestModel measureMedeiaRoundTrip(final MedeiaSerde serde, final ModelState model) {
-        return roundTrip(serde, model);
-    }
-
-    @Benchmark
-    public TestModel measureEveritRoundTrip(final EveritSerde serde, final ModelState model) {
-        return roundTrip(serde, model);
-    }
-
-    @Benchmark
-    public TestModel measureSkemaRoundTrip(final SkemaSerde serde, final ModelState model) {
-        return roundTrip(serde, model);
-    }
-
-    @Benchmark
-    public TestModel measureConfluentRoundTrip(final ConfluentSerde serde, final ModelState model) {
-        return roundTrip(serde, model);
-    }
-
-    @Benchmark
-    public TestModel measureVertxRoundTrip(final VertxSerde serde, final ModelState model) {
-        return roundTrip(serde, model);
-    }
-
-    @Benchmark
-    public TestModel measureSchemaFriendRoundTrip(
-            final SchemaFriendSerde serde, final ModelState model) {
-        return roundTrip(serde, model);
-    }
-
-    @Benchmark
-    public TestModel measureNetworkNtRoundTrip(final NetworkNtSerde serde, final ModelState model) {
-        return roundTrip(serde, model);
-    }
-
-    @Benchmark
-    public TestModel measureSnowRoundTrip(final SnowSerde serde, final ModelState model) {
-        return roundTrip(serde, model);
-    }
-
-    @Benchmark
-    public TestModel measureJustifyRoundTrip(final JustifySerde serde, final ModelState model) {
-        return roundTrip(serde, model);
-    }
+//    @Benchmark
+//    public TestModel measureJacksonRoundTrip(final JacksonSerde serde, final ModelState model) {
+//        return roundTrip(serde, model);
+//    }
+//
+//    @Benchmark
+//    public TestModel measureJacksonIntermediateRoundTrip(
+//            final JacksonIntermediateSerde serde, final ModelState model) {
+//        return roundTrip(serde, model);
+//    }
+//
+//    @Benchmark
+//    public TestModel measureMedeiaRoundTrip(final MedeiaSerde serde, final ModelState model) {
+//        return roundTrip(serde, model);
+//    }
+//
+//    @Benchmark
+//    public TestModel measureEveritRoundTrip(final EveritSerde serde, final ModelState model) {
+//        return roundTrip(serde, model);
+//    }
+//
+//    @Benchmark
+//    public TestModel measureSkemaRoundTrip(final SkemaSerde serde, final ModelState model) {
+//        return roundTrip(serde, model);
+//    }
+//
+//    @Benchmark
+//    public TestModel measureConfluentRoundTrip(final ConfluentSerde serde, final ModelState model) {
+//        return roundTrip(serde, model);
+//    }
+//
+//    @Benchmark
+//    public TestModel measureVertxRoundTrip(final VertxSerde serde, final ModelState model) {
+//        return roundTrip(serde, model);
+//    }
+//
+//    @Benchmark
+//    public TestModel measureSchemaFriendRoundTrip(
+//            final SchemaFriendSerde serde, final ModelState model) {
+//        return roundTrip(serde, model);
+//    }
+//
+//    @Benchmark
+//    public TestModel measureNetworkNtRoundTrip(final NetworkNtSerde serde, final ModelState model) {
+//        return roundTrip(serde, model);
+//    }
+//
+//    @Benchmark
+//    public TestModel measureSnowRoundTrip(final SnowSerde serde, final ModelState model) {
+//        return roundTrip(serde, model);
+//    }
+//
+//    @Benchmark
+//    public TestModel measureJustifyRoundTrip(final JustifySerde serde, final ModelState model) {
+//        return roundTrip(serde, model);
+//    }
+//
+//    @Benchmark
+//    public TestModel measureDevHarrelRoundTrip(final DevHarrelSerde serde, final ModelState model) {
+//        return roundTrip(serde, model);
+//    }
 
     private TestModel roundTrip(final SerdeImpl serde, final ModelState model) {
         final byte[] serialized = serde.serializer().serialize(model.model, true);

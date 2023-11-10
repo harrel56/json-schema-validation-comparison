@@ -16,25 +16,16 @@
 
 package org.creekservice.kafka.test.perf;
 
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
-
 import org.creekservice.kafka.test.perf.testsuite.JsonSchemaTestSuite.Result;
 import org.creekservice.kafka.test.perf.testsuite.SchemaSpec;
 import org.creekservice.kafka.test.perf.util.Logging;
-import org.creekservice.kafka.test.perf.validator.EveritValidator;
-import org.creekservice.kafka.test.perf.validator.JustifyValidator;
-import org.creekservice.kafka.test.perf.validator.MedeiaValidator;
+import org.creekservice.kafka.test.perf.validator.DevHarrelValidator;
 import org.creekservice.kafka.test.perf.validator.NetworkNtValidator;
 import org.creekservice.kafka.test.perf.validator.SchemaFriendValidator;
 import org.creekservice.kafka.test.perf.validator.SkemaValidator;
-import org.creekservice.kafka.test.perf.validator.SnowValidator;
-import org.creekservice.kafka.test.perf.validator.VertxValidator;
-import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.BenchmarkMode;
-import org.openjdk.jmh.annotations.Fork;
-import org.openjdk.jmh.annotations.Mode;
-import org.openjdk.jmh.annotations.OutputTimeUnit;
-import org.openjdk.jmh.annotations.Threads;
+import org.openjdk.jmh.annotations.*;
+
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 /**
  * Benchmark results for JSON Schema validation.
@@ -82,7 +73,7 @@ import org.openjdk.jmh.annotations.Threads;
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(MILLISECONDS)
 @Threads(4)
-@Fork(4) // Note: to debug, set fork to 0.
+@Fork(0) // Note: to debug, set fork to 0.
 // @Warmup(iterations = 0, time = 10)
 // @Measurement(iterations = 1, time = 10)
 @SuppressWarnings({"FieldMayBeFinal", "MethodName"}) // not final to avoid folding.
@@ -92,143 +83,153 @@ public class JsonValidateBenchmark {
         Logging.disable();
     }
 
+    //    @Benchmark
+//    public Result measureDraft_4_Medeia(final MedeiaValidator validator) {
+//        return validator.validate(SchemaSpec.DRAFT_04);
+//    }
+//
+//    @Benchmark
+//    public Result measureDraft_6_Medeia(final MedeiaValidator validator) {
+//        return validator.validate(SchemaSpec.DRAFT_06);
+//    }
+//
+//    @Benchmark
+//    public Result measureDraft_7_Medeia(final MedeiaValidator validator) {
+//        return validator.validate(SchemaSpec.DRAFT_07);
+//    }
+//
+//    @Benchmark
+//    public Result measureDraft_4_Everit(final EveritValidator validator) {
+//        return validator.validate(SchemaSpec.DRAFT_04);
+//    }
+//
+//    @Benchmark
+//    public Result measureDraft_6_Everit(final EveritValidator validator) {
+//        return validator.validate(SchemaSpec.DRAFT_06);
+//    }
+//
+//    @Benchmark
+//    public Result measureDraft_7_Everit(final EveritValidator validator) {
+//        return validator.validate(SchemaSpec.DRAFT_07);
+//    }
+//
+//    @Benchmark
+//    public Result measureDraft_2020_12_Skema(final SkemaValidator validator) {
+//        return validator.validate(SchemaSpec.DRAFT_2020_12);
+//    }
+//
+//    @Benchmark
+//    public Result measureDraft_4_Vertx(final VertxValidator validator) {
+//        return validator.validate(SchemaSpec.DRAFT_04);
+//    }
+//
+//    @Benchmark
+//    public Result measureDraft_7_Vertx(final VertxValidator validator) {
+//        return validator.validate(SchemaSpec.DRAFT_07);
+//    }
+//
+//    @Benchmark
+//    public Result measureDraft_2019_09_Vertx(final VertxValidator validator) {
+//        return validator.validate(SchemaSpec.DRAFT_2019_09);
+//    }
+//
+//    @Benchmark
+//    public Result measureDraft_2020_12_Vertx(final VertxValidator validator) {
+//        return validator.validate(SchemaSpec.DRAFT_2020_12);
+//    }
+//
+//    @Benchmark
+//    public Result measureDraft_3_SchemaFriend(final SchemaFriendValidator validator) {
+//        return validator.validate(SchemaSpec.DRAFT_03);
+//    }
+//
+//    @Benchmark
+//    public Result measureDraft_4_SchemaFriend(final SchemaFriendValidator validator) {
+//        return validator.validate(SchemaSpec.DRAFT_04);
+//    }
+//
+//    @Benchmark
+//    public Result measureDraft_6_SchemaFriend(final SchemaFriendValidator validator) {
+//        return validator.validate(SchemaSpec.DRAFT_06);
+//    }
+//
+//    @Benchmark
+//    public Result measureDraft_7_SchemaFriend(final SchemaFriendValidator validator) {
+//        return validator.validate(SchemaSpec.DRAFT_07);
+//    }
+//
+//    @Benchmark
+//    public Result measureDraft_2019_09_SchemaFriend(final SchemaFriendValidator validator) {
+//        return validator.validate(SchemaSpec.DRAFT_2019_09);
+//    }
+//
+//    @Benchmark
+//    public Result measureDraft_2020_12_SchemaFriend(final SchemaFriendValidator validator) {
+//        return validator.validate(SchemaSpec.DRAFT_2020_12);
+//    }
+//
+//    @Benchmark
+//    public Result measureDraft_4_NetworkNt(final NetworkNtValidator validator) {
+//        return validator.validate(SchemaSpec.DRAFT_04);
+//    }
+//
+//    @Benchmark
+//    public Result measureDraft_6_NetworkNt(final NetworkNtValidator validator) {
+//        return validator.validate(SchemaSpec.DRAFT_06);
+//    }
+//
+//    @Benchmark
+//    public Result measureDraft_7_NetworkNt(final NetworkNtValidator validator) {
+//        return validator.validate(SchemaSpec.DRAFT_07);
+//    }
+//
+//    @Benchmark
+//    public Result measureDraft_2019_09_NetworkNt(final NetworkNtValidator validator) {
+//        return validator.validate(SchemaSpec.DRAFT_2019_09);
+//    }
+//
+//    @Benchmark
+//    public Result measureDraft_2020_12_NetworkNt(final NetworkNtValidator validator) {
+//        return validator.validate(SchemaSpec.DRAFT_2020_12);
+//    }
+//
+//    @Benchmark
+//    public Result measureDraft_6_Snow(final SnowValidator validator) {
+//        return validator.validate(SchemaSpec.DRAFT_06);
+//    }
+//
+//    @Benchmark
+//    public Result measureDraft_7_Snow(final SnowValidator validator) {
+//        return validator.validate(SchemaSpec.DRAFT_07);
+//    }
+//
+//    @Benchmark
+//    public Result measureDraft_2019_09_Snow(final SnowValidator validator) {
+//        return validator.validate(SchemaSpec.DRAFT_2019_09);
+//    }
+//
+//    @Benchmark
+//    public Result measureDraft_4_Justify(final JustifyValidator validator) {
+//        return validator.validate(SchemaSpec.DRAFT_04);
+//    }
+//
+//    @Benchmark
+//    public Result measureDraft_6_Justify(final JustifyValidator validator) {
+//        return validator.validate(SchemaSpec.DRAFT_06);
+//    }
+//
+//    @Benchmark
+//    public Result measureDraft_7_Justify(final JustifyValidator validator) {
+//        return validator.validate(SchemaSpec.DRAFT_07);
+//    }
+//
+//    @Benchmark
+//    public Result measureDraft_2019_09_DevHarrel(final DevHarrelValidator validator) {
+//        return validator.validate(SchemaSpec.DRAFT_2019_09);
+//    }
+//
     @Benchmark
-    public Result measureDraft_4_Medeia(final MedeiaValidator validator) {
-        return validator.validate(SchemaSpec.DRAFT_04);
-    }
-
-    @Benchmark
-    public Result measureDraft_6_Medeia(final MedeiaValidator validator) {
-        return validator.validate(SchemaSpec.DRAFT_06);
-    }
-
-    @Benchmark
-    public Result measureDraft_7_Medeia(final MedeiaValidator validator) {
-        return validator.validate(SchemaSpec.DRAFT_07);
-    }
-
-    @Benchmark
-    public Result measureDraft_4_Everit(final EveritValidator validator) {
-        return validator.validate(SchemaSpec.DRAFT_04);
-    }
-
-    @Benchmark
-    public Result measureDraft_6_Everit(final EveritValidator validator) {
-        return validator.validate(SchemaSpec.DRAFT_06);
-    }
-
-    @Benchmark
-    public Result measureDraft_7_Everit(final EveritValidator validator) {
-        return validator.validate(SchemaSpec.DRAFT_07);
-    }
-
-    @Benchmark
-    public Result measureDraft_2020_12_Skema(final SkemaValidator validator) {
+    public Result measureDraft_2020_12_DevHarrel(final DevHarrelValidator validator) {
         return validator.validate(SchemaSpec.DRAFT_2020_12);
-    }
-
-    @Benchmark
-    public Result measureDraft_4_Vertx(final VertxValidator validator) {
-        return validator.validate(SchemaSpec.DRAFT_04);
-    }
-
-    @Benchmark
-    public Result measureDraft_7_Vertx(final VertxValidator validator) {
-        return validator.validate(SchemaSpec.DRAFT_07);
-    }
-
-    @Benchmark
-    public Result measureDraft_2019_09_Vertx(final VertxValidator validator) {
-        return validator.validate(SchemaSpec.DRAFT_2019_09);
-    }
-
-    @Benchmark
-    public Result measureDraft_2020_12_Vertx(final VertxValidator validator) {
-        return validator.validate(SchemaSpec.DRAFT_2020_12);
-    }
-
-    @Benchmark
-    public Result measureDraft_3_SchemaFriend(final SchemaFriendValidator validator) {
-        return validator.validate(SchemaSpec.DRAFT_03);
-    }
-
-    @Benchmark
-    public Result measureDraft_4_SchemaFriend(final SchemaFriendValidator validator) {
-        return validator.validate(SchemaSpec.DRAFT_04);
-    }
-
-    @Benchmark
-    public Result measureDraft_6_SchemaFriend(final SchemaFriendValidator validator) {
-        return validator.validate(SchemaSpec.DRAFT_06);
-    }
-
-    @Benchmark
-    public Result measureDraft_7_SchemaFriend(final SchemaFriendValidator validator) {
-        return validator.validate(SchemaSpec.DRAFT_07);
-    }
-
-    @Benchmark
-    public Result measureDraft_2019_09_SchemaFriend(final SchemaFriendValidator validator) {
-        return validator.validate(SchemaSpec.DRAFT_2019_09);
-    }
-
-    @Benchmark
-    public Result measureDraft_2020_12_SchemaFriend(final SchemaFriendValidator validator) {
-        return validator.validate(SchemaSpec.DRAFT_2020_12);
-    }
-
-    @Benchmark
-    public Result measureDraft_4_NetworkNt(final NetworkNtValidator validator) {
-        return validator.validate(SchemaSpec.DRAFT_04);
-    }
-
-    @Benchmark
-    public Result measureDraft_6_NetworkNt(final NetworkNtValidator validator) {
-        return validator.validate(SchemaSpec.DRAFT_06);
-    }
-
-    @Benchmark
-    public Result measureDraft_7_NetworkNt(final NetworkNtValidator validator) {
-        return validator.validate(SchemaSpec.DRAFT_07);
-    }
-
-    @Benchmark
-    public Result measureDraft_2019_09_NetworkNt(final NetworkNtValidator validator) {
-        return validator.validate(SchemaSpec.DRAFT_2019_09);
-    }
-
-    @Benchmark
-    public Result measureDraft_2020_12_NetworkNt(final NetworkNtValidator validator) {
-        return validator.validate(SchemaSpec.DRAFT_2020_12);
-    }
-
-    @Benchmark
-    public Result measureDraft_6_Snow(final SnowValidator validator) {
-        return validator.validate(SchemaSpec.DRAFT_06);
-    }
-
-    @Benchmark
-    public Result measureDraft_7_Snow(final SnowValidator validator) {
-        return validator.validate(SchemaSpec.DRAFT_07);
-    }
-
-    @Benchmark
-    public Result measureDraft_2019_09_Snow(final SnowValidator validator) {
-        return validator.validate(SchemaSpec.DRAFT_2019_09);
-    }
-
-    @Benchmark
-    public Result measureDraft_4_Justify(final JustifyValidator validator) {
-        return validator.validate(SchemaSpec.DRAFT_04);
-    }
-
-    @Benchmark
-    public Result measureDraft_6_Justify(final JustifyValidator validator) {
-        return validator.validate(SchemaSpec.DRAFT_06);
-    }
-
-    @Benchmark
-    public Result measureDraft_7_Justify(final JustifyValidator validator) {
-        return validator.validate(SchemaSpec.DRAFT_07);
     }
 }

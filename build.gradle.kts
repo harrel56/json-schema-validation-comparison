@@ -40,6 +40,7 @@ val hamcrestVersion = "2.2"
 val jmhVersion = "1.36"
 val confluentVersion = "7.5.1"
 val vertxVersion = "4.4.1"
+val devHarrelVersion = "1.4.0"
 
 dependencies {
     implementation("org.openjdk.jmh:jmh-core:$jmhVersion")
@@ -70,6 +71,8 @@ dependencies {
     runtimeOnly("org.glassfish:jakarta.json:2.0.0:module")
 
     implementation("org.leadpony.justify:justify:3.1.0")
+
+    implementation("dev.harrel:json-schema:$devHarrelVersion")
 
     implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
     runtimeOnly("org.apache.logging.log4j:log4j-slf4j2-impl:$log4jVersion")
